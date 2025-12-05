@@ -1,0 +1,41 @@
+--crear base de datos
+create database sistemaexpertodiagnomedico;
+--ingresar a la base de datos
+use sistemaexpertodiagnomedico;
+--Crear tablas
+
+create table Categorias (
+    cat_id int(10) primary key,
+    cat_nombre varchar(100) not null);
+
+create table Enfermedades (
+    enf_id int(10) primary key,
+    enf_nombre varchar(100) not null,
+    enf_recomendacion_basica varchar(250) not null,
+    cat_id int(10) not null,
+    foreign key (cat_id) references Categorias(cat_id));
+
+create table Sintomas (
+    sin_id int(10) primary key,
+    sin_nombre varchar(100) not null);
+
+create table Sintoma_enfermedad (
+    sin_enf_id int(10) primary key,
+    enf_id int(10) not null,
+    sin_id int(10) not null,
+    foreign key (enf_id) references enfermedades(enf_id),
+    foreign key (sin_id) references sintomas(sin_id));
+
+create table Pacientes (
+    pac_id int(10) primary key,
+    pac_nombre varchar(100) not null,
+    edad int(3) not null);
+
+create table Diagnosticos (
+    dia_id int(10) primary key,
+    pac_id int(10) not null,
+    sin_id int(10) not null,
+    enf_id int(10) not null,
+    foreign key (pac_id) references pacientes(pac_id),
+    foreign key (sin_id) references sintomas(sin_id),
+    foreign key (enf_id) references enfermedades(enf_id));
